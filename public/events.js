@@ -5,7 +5,6 @@ const getCatPic = async () => {
     const res = await fetch(`/kitten/image`);
     const json = await res.json();
     let catPic = document.getElementsByClassName('cat-pic');
-<<<<<<< HEAD
     // console.log(catPic)
 
     if(res.ok) {
@@ -15,13 +14,6 @@ const getCatPic = async () => {
         loader.innerHTML = '';
     } else {
         alert("Something went wrong, please try again...")
-=======
-
-    if(res.ok) {
-        catPic[0].src = json.src;
-    } else {
-        throw new Error('No cat pic')
->>>>>>> 182b30653fe6daf77cd1a14e14f3242faca1e699
     }
 
 }
