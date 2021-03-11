@@ -31,20 +31,73 @@ const upVote = async () => {
     const res = await fetch(`/kitten/upvote`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'            
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({score})
     });
-       const json = await res.json();
-       console.log(res);
-       console.log(json) 
+        const json = await res.json();
+        console.log(res);
+        console.log(json)
 
-   if(res.ok) {
+    if(res.ok) {
        console.log(score)
     score.innerHTML = json.score;
-   } else {
-       alert('Something went wrong, please try again...');
-   }
+    } else {
+        alert('Something went wrong, please try again...');
+    }
 }
 
 upvote.addEventListener('click', upVote)
+
+const downVote = async () => {
+    const res = await fetch(`/kitten/downvote`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({score})
+    });
+    const json = await res.json();
+    console.log(res);
+    console.log(json)
+
+    if(res.ok) {
+        console.log(score)
+        score.innerHTML = json.score;
+    } else {
+        alert('Something went wrong, please try again...');
+    }
+}
+
+downvote.addEventListener('click', downVote);
+
+const createComment = async () => {
+    const comment = document.getElementById('user-comment').value;
+    const comments = document.querySelector('.comments')
+    const res = await fetch('/kitten/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ comment })
+    })
+
+    const json = await res.json();
+
+    if(res.ok) {
+        let newComment = document.createElement('li')
+        comments.appendChild(newComment)
+        newComment.innerHTML = json.comments[json.comments.length-1];
+    } else {
+        alert('Something went wrong, please try again...')
+    }
+}
+
+
+let submitButton = document.getElementById('submit-button')
+
+submitButton.addEventListener('click', (event) => {
+    console.log('here');
+    event.preventDefault();
+    createComment();
+})
